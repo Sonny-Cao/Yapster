@@ -4,9 +4,10 @@ import { auth } from "@clerk/nextjs/server";
 
 const f = createUploadthing();
 const handleAuth = async () => {
-  const session = await auth();
-  if (!session.userId) throw new Error("Unauthorized");
-  return {userId: session.userId};
+  // const session = await auth();
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+  return {userId: userId};
 }
 
 export const ourFileRouter = {
