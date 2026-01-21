@@ -14,10 +14,6 @@ const ServerIdLayout = async ({
 }) => {
 
   const { serverId } = await params;
-  console.log("=== SERVER ID LAYOUT MOUNT ===");
-  console.log("params object:", params);
-  console.log("params.serverId:", params.serverId);
-
   const profile = await currentProfile();
 
   if (!profile) {
