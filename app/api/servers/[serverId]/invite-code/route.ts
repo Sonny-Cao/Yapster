@@ -8,7 +8,7 @@ export async function PATCH(
   req: Request,
   context: {params: any}
 ) {
-  const params = await context.params
+  const params = await context.params;
 
   try {
     const profile = await currentProfile();
