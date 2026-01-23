@@ -2,6 +2,32 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
+export async function DELETE(
+  req: Request,
+  props: {params: Promise<{serverId: string}>}
+) {
+  try{
+    const profile = await currentProfile();
+    if (!profile) {
+      return new NextResponse("Unauthorized", {status: 401});
+    }
+
+    const params = await props.params;
+
+    const server = await db.server.delete({
+      where: {
+        id: params.serverId,
+        profileId: profile.id,
+      }
+    })
+    return NextResponse.json(server);
+  } catch(error) {
+    console.log("[SERVER_ID_DELETE]", error);
+    return new NextResponse("Internal Error", {status: 500});
+
+  }
+}
+
 export async function PATCH(
   req: Request,
   props: {params: Promise<{serverId: string}>}
