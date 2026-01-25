@@ -4,8 +4,7 @@ import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 interface ServerIdPageProps {
-  params: Promise<{
-    serverId: string;}>;
+  params: Promise<{serverId: string;}>;
 };
 
 const ServerIdPage = async ({
