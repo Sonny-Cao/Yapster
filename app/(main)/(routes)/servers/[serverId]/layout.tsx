@@ -10,7 +10,7 @@ const ServerIdLayout = async ({
   params,
 }: {
   children: React.ReactNode;
-  params: { serverId: string };
+  params:  Promise<{ serverId: string }>;
 }) => {
 
   const { serverId } = await params;
@@ -22,7 +22,7 @@ const ServerIdLayout = async ({
   
   const server = await db.server.findFirst({
   where: {
-    id: params.serverId,
+    id: serverId,
     members: {
       some: {
         profileId: profile.id,

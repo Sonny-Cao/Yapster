@@ -21,9 +21,9 @@ export const NavigationAction = () => {
           <div className="flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] 
             transition-all overflow-hidden items-center 
             justify-center bg-background dark:bg-neutral-700 
-            dark:group-hover:bg-yellow-500">
+            dark:group-hover:bg-yellow-500 group-hover:bg-yellow-500">
               <Plus
-                className="group-hover:text-white 
+                className="dark:group-hover:text-white group-hover:text-white 
                 transition text-yellow-500"
                 size={25}
               />
