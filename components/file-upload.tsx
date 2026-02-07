@@ -19,12 +19,14 @@ export const FileUpload = ({
 }: FileUploadProps) => {
   let fileUrl = value;
   let fileName = "";
+  let fileType = "";
   
   try {
     if (value && value.startsWith('{')) {
       const parsed = JSON.parse(value);
       fileUrl = parsed.url;
       fileName = parsed.name;
+      fileType = parsed.type;
     } else {
       fileUrl = value;
       fileName = value;
@@ -34,9 +36,10 @@ export const FileUpload = ({
     fileName = value;
   }
   
-  const fileType = fileName?.split(".").pop()?.toLowerCase();
+  const isPDF = fileType === "application/pdf";
+  const isImage = fileType?.startsWith("image/");
   
-  if (value && fileType !== "pdf") {
+  if (value && isImage) {
     return (
       <div className="relative h-20 w-20">
         <Image
@@ -56,7 +59,7 @@ export const FileUpload = ({
     )
   }
 
-  if (value && fileType === "pdf") {
+  if (value && isPDF) {
     return (
       <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
         <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400"/>
@@ -87,7 +90,8 @@ export const FileUpload = ({
           const file = res?.[0];
           const dataToStore = JSON.stringify({ 
             url: file?.ufsUrl, 
-            name: file?.name 
+            name: file?.name,
+            type: file?.type 
           });
           onChange(dataToStore);
         }}

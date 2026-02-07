@@ -62,10 +62,13 @@ export const MessageFileModal = () => {
       });
 
       let fileUrlToSend = values.fileUrl;
+      let fileTypeToSend = null;
+      
       try {
         if (values.fileUrl.startsWith('{')) {
           const parsed = JSON.parse(values.fileUrl);
           fileUrlToSend = parsed.url;
+          fileTypeToSend = parsed.type;
         }
       } catch {
         fileUrlToSend = values.fileUrl;
@@ -74,6 +77,7 @@ export const MessageFileModal = () => {
       await axios.post(url, {
         content: fileUrlToSend,
         fileUrl: fileUrlToSend,
+        fileType: fileTypeToSend,
       });
       
       form.reset();
@@ -82,7 +86,6 @@ export const MessageFileModal = () => {
     }
     catch (error){
       console.log(error);
-
     }
   }
 
