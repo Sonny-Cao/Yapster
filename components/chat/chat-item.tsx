@@ -11,6 +11,7 @@ import { ActionTooltip } from "@/components/action-tooltip";
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   Form,
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface ChatItemProps {
   id: string;
@@ -62,7 +64,7 @@ export const ChatItem = ({
 }: ChatItemProps) => {
 
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const { onOpen } = useModal()
 
   useEffect(() => {
     const handleKeyDown = (event : any) => {
@@ -135,7 +137,7 @@ export const ChatItem = ({
               {timestamp}
             </span>
           </div>
-          {isImage && (
+          {isImage && deleted === false && (
             <a 
               href={fileUrl!}
               target="_blank"
@@ -150,7 +152,7 @@ export const ChatItem = ({
               /> 
             </a>
           )}
-          {isPDF && (
+          {isPDF && deleted === false && (
             <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
               <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400"/>
               <a
@@ -223,6 +225,10 @@ export const ChatItem = ({
           )}
           <ActionTooltip label="Delete">
               <Trash
+                  onClick={ () => onOpen("deleteMessage", {
+                  apiUrl: `${socketUrl}/${id}`,
+                  query: socketQuery,
+                })}
                 className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-300 transition"
               />
           </ActionTooltip>
