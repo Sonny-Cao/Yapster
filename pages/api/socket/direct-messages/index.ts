@@ -71,7 +71,7 @@ export default async function handler(
       data: {
         content,
         fileUrl,
-        // fileType,
+        fileType,
         conversationId: conversationId as string,
         memberId: member.id,
       },
